@@ -2,6 +2,7 @@
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
 nvm use v20.20.2 --silent 2>/dev/null
+export PATH="$PATH:/home/kali/bin"
 
 # Iniciar Ollama
 if ! pgrep -x ollama > /dev/null; then
