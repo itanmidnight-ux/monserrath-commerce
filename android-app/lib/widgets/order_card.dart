@@ -54,7 +54,7 @@ class OrderCard extends StatelessWidget {
           onTap: () { Navigator.pop(context); _showDetail(context); },
         ),
         ListTile(
-          leading: const Icon(Icons.check_circle, color: Color(0xFF2E7D32)),
+          leading: const Icon(Icons.check_circle, color: Color(0xFF2D5016)),
           title: const Text('Marcar entregado'),
           onTap: () { Navigator.pop(context); onDeliver(); },
         ),
@@ -91,7 +91,7 @@ class OrderCard extends StatelessWidget {
         endActionPane: ActionPane(motion: const DrawerMotion(), children: [
           SlidableAction(
             onPressed: (_) => onDeliver(),
-            backgroundColor: const Color(0xFF2E7D32),
+            backgroundColor: const Color(0xFF2D5016),
             foregroundColor: Colors.white,
             icon: Icons.check_circle_rounded,
             label: 'ENTREGADO',
@@ -101,7 +101,7 @@ class OrderCard extends StatelessWidget {
         startActionPane: ActionPane(motion: const DrawerMotion(), children: [
           SlidableAction(
             onPressed: (_) => onDeliver(),
-            backgroundColor: const Color(0xFF2E7D32),
+            backgroundColor: const Color(0xFF2D5016),
             foregroundColor: Colors.white,
             icon: Icons.check_circle_rounded,
             label: 'ENTREGADO',
@@ -137,7 +137,7 @@ class OrderCard extends StatelessWidget {
                   Text(
                     '\$${NumberFormat('#,###', 'es_CO').format(order.productPrice)}',
                     style: const TextStyle(
-                      fontWeight: FontWeight.w600, color: Color(0xFF2E7D32))),
+                      fontWeight: FontWeight.w600, color: Color(0xFF2D5016))),
               ]),
               const SizedBox(height: 4),
               Row(children: [

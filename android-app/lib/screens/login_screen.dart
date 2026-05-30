@@ -29,13 +29,17 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1B5E20),
+      backgroundColor: const Color(0xFF1A3009),
       body: SafeArea(child: Center(child: SingleChildScrollView(
         padding: const EdgeInsets.all(32),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          const Icon(Icons.storefront_rounded, size: 80, color: Colors.white),
-          const SizedBox(height: 16),
-          const Text('Pedidos', style: TextStyle(
+          const Text('🌾', style: TextStyle(fontSize: 52)),
+          const SizedBox(height: 8),
+          const Text('CONCENTRADOS MONSERRATH', style: TextStyle(
+            fontSize: 15, fontWeight: FontWeight.w800, color: Color(0xFFD4800A),
+            letterSpacing: 1.2)),
+          const SizedBox(height: 4),
+          const Text('Sistema de Pedidos', style: TextStyle(
             fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white)),
           const SizedBox(height: 4),
           const Text('Sistema de gestión WhatsApp',
@@ -69,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(width: double.infinity, child: FilledButton(
                 onPressed: _loading ? null : _login,
                 style: FilledButton.styleFrom(
-                  backgroundColor: const Color(0xFF2E7D32),
+                  backgroundColor: const Color(0xFF2D5016),
                   minimumSize: const Size(double.infinity, 48),
                 ),
                 child: _loading

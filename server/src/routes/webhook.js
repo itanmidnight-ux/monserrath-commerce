@@ -14,6 +14,11 @@ router.post('/message', apiKeyAuth, async (req, res) => {
     ON CONFLICT(phone) DO UPDATE SET name = COALESCE(excluded.name, name)`)
     .run(phone, name || null);
 
+  // Guardar mensaje en historial de conversación
+  db.prepare(`INSERT INTO messages (phone, customer_name, content, direction, sent)
+    VALUES (?, ?, ?, 'inbound', 1)`)
+    .run(phone, name || null, message);
+
   const customer = db.prepare('SELECT * FROM customers WHERE phone=?').get(phone);
 
   const parsed = await parseOrderMessage(message, name || phone);

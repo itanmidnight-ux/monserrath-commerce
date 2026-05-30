@@ -21,6 +21,7 @@ app.use('/api/webhook', require('./routes/webhook'));
 app.use('/api/products', require('./routes/products'));
 app.use('/api/orders', require('./routes/orders'));
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/messages', require('./routes/messages'));
 
 app.get('/health', (req, res) => res.json({ status: 'ok', time: new Date().toISOString() }));
 app.get('/preview', (req, res) => res.sendFile(require('path').join(__dirname, 'preview.html')));

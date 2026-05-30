@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/order.dart';
 import '../models/product.dart';
+import '../models/message.dart';
 
 class ApiService {
   static String _baseUrl = '';
@@ -87,5 +88,36 @@ class ApiService {
   static Future<void> deleteProduct(int id) async {
     await http.delete(Uri.parse('$_baseUrl/api/products/$id'), headers: _headers)
         .timeout(const Duration(seconds: 10));
+  }
+
+  static Future<List<Conversation>> getConversations() async {
+    final res = await http.get(Uri.parse('$_baseUrl/api/messages'), headers: _headers)
+        .timeout(const Duration(seconds: 10));
+    if (res.statusCode == 200) {
+      return (jsonDecode(res.body) as List)
+          .map((j) => Conversation.fromJson(j)).toList();
+    }
+    throw Exception('Error conversaciones');
+  }
+
+  static Future<List<Message>> getMessages(String phone) async {
+    final res = await http.get(
+      Uri.parse('$_baseUrl/api/messages/${Uri.encodeComponent(phone)}'),
+      headers: _headers)
+        .timeout(const Duration(seconds: 10));
+    if (res.statusCode == 200) {
+      return (jsonDecode(res.body) as List)
+          .map((j) => Message.fromJson(j)).toList();
+    }
+    throw Exception('Error mensajes');
+  }
+
+  static Future<void> sendWhatsAppMessage(String phone, String content) async {
+    final res = await http.post(
+      Uri.parse('$_baseUrl/api/messages/send'),
+      headers: _headers,
+      body: jsonEncode({'phone': phone, 'content': content}))
+        .timeout(const Duration(seconds: 10));
+    if (res.statusCode != 200) throw Exception('Error enviando mensaje');
   }
 }

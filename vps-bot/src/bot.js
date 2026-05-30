@@ -6,7 +6,7 @@ const {
   fetchLatestBaileysVersion
 } = require('@whiskeysockets/baileys');
 const pino = require('pino');
-const { sendMessage, getProducts } = require('./apiClient');
+const { sendMessage, getProducts, getPendingOutbound, markMessageSent } = require('./apiClient');
 const path = require('path');
 
 const AUTH_DIR = path.join(__dirname, '../auth');
@@ -107,6 +107,30 @@ async function connectToWhatsApp() {
       }
     }
   });
+  return sock;
 }
 
-connectToWhatsApp();
+let sockRef = null;
+
+async function startPollingOutbound() {
+  setInterval(async () => {
+    if (!sockRef) return;
+    try {
+      const pending = await getPendingOutbound();
+      for (const msg of pending) {
+        const jid = `${msg.phone}@s.whatsapp.net`;
+        await sockRef.sendMessage(jid, { text: msg.content });
+        await markMessageSent(msg.id);
+        console.log(`[→ WA] ${msg.phone}: ${msg.content.slice(0, 40)}`);
+      }
+    } catch (err) {
+      if (err.code !== 'ECONNREFUSED') console.error('Poll error:', err.message);
+    }
+  }, 3000);
+}
+
+connectToWhatsApp().then(sock => {
+  sockRef = sock;
+  startPollingOutbound();
+  console.log('✅ Polling de mensajes activo (cada 3s)');
+}).catch(console.error);

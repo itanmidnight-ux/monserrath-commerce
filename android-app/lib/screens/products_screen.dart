@@ -75,7 +75,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     aliases: List.from(aliases), price: price));
               },
               style: FilledButton.styleFrom(
-                backgroundColor: const Color(0xFF2E7D32)),
+                backgroundColor: const Color(0xFF2D5016)),
               child: const Text('Guardar Producto'),
             )),
           ]),
@@ -223,7 +223,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                             Text(
                               '\$${NumberFormat('#,###', 'es_CO').format(p.price)}',
                               style: const TextStyle(
-                                color: Color(0xFF2E7D32),
+                                color: Color(0xFF2D5016),
                                 fontWeight: FontWeight.bold)),
                           ]),
                           if (p.aliases.isNotEmpty)
@@ -244,7 +244,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
         onPressed: _showAddProduct,
         icon: const Icon(Icons.add),
         label: const Text('Producto'),
-        backgroundColor: const Color(0xFF2E7D32),
+        backgroundColor: const Color(0xFF2D5016),
         foregroundColor: Colors.white,
       ),
     );

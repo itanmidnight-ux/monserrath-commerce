@@ -16,6 +16,17 @@ CREATE TABLE IF NOT EXISTS products (
   created_at TEXT DEFAULT (datetime('now','localtime'))
 );
 
+CREATE TABLE IF NOT EXISTS messages (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  phone TEXT NOT NULL,
+  customer_name TEXT,
+  content TEXT NOT NULL,
+  direction TEXT NOT NULL DEFAULT 'inbound',
+  sent INTEGER DEFAULT 0,
+  created_at TEXT DEFAULT (datetime('now','localtime'))
+);
+CREATE INDEX IF NOT EXISTS idx_messages_phone ON messages(phone);
+
 CREATE TABLE IF NOT EXISTS orders (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   customer_id INTEGER REFERENCES customers(id),

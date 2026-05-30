@@ -16,4 +16,13 @@ async function getProducts() {
   return res.data;
 }
 
-module.exports = { sendMessage, getProducts };
+async function getPendingOutbound() {
+  const res = await client.get('/api/messages/outbound/pending');
+  return res.data;
+}
+
+async function markMessageSent(id) {
+  await client.put(`/api/messages/${id}/sent`);
+}
+
+module.exports = { sendMessage, getProducts, getPendingOutbound, markMessageSent };
