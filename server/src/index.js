@@ -6,8 +6,15 @@ const { initDB } = require('./db/database');
 const { schedulePDFJob } = require('./services/pdfScheduler');
 
 const app = express();
-app.use(helmet());
+// Helmet con CSP desactivado para que Flutter web funcione
+app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
 app.use(cors());
+// Servir Flutter web - sin cache para desarrollo
+app.use('/app', (req, res, next) => {
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('ngrok-skip-browser-warning', 'true');
+  next();
+}, require('express').static(__dirname + '/webapp'));
 app.use(express.json({ limit: '10mb' }));
 
 app.use('/api/webhook', require('./routes/webhook'));
