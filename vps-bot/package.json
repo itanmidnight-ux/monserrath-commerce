@@ -1,0 +1,13 @@
+{
+  "name": "pedidos-whatsapp-bot",
+  "version": "1.0.0",
+  "main": "src/bot.js",
+  "scripts": { "start": "node src/bot.js" },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.9",
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5",
+    "pino": "^9.1.0",
+    "node-windows": "^1.0.0-beta.8"
+  }
+}
