@@ -7,7 +7,6 @@
 
     <application
         android:label="Pedidos"
-        android:label="Pedidos"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:http/http.dart' as http;
 import '../models/order.dart';
 import '../models/product.dart';
 import '../services/api_service.dart';
@@ -12,24 +12,28 @@ class AppProvider extends ChangeNotifier {
   List<Product> products = [];
   bool loading = false;
 
-  AppProvider() {
-    Connectivity().onConnectivityChanged.listen((results) {
-      isOnline = results.isNotEmpty &&
-        results.any((r) => r != ConnectivityResult.none);
-      if (isOnline && isLoggedIn) syncPendingActions();
-      notifyListeners();
-    });
+  Future<bool> _checkOnline() async {
+    try {
+      final res = await http
+          .get(Uri.parse('https://francoise-subhumid-maire.ngrok-free.dev/health'))
+          .timeout(const Duration(seconds: 5));
+      return res.statusCode == 200;
+    } catch (_) {
+      return false;
+    }
   }
 
   Future<void> login(String url, String pin) async {
     final token = await ApiService.login(url, pin);
     await ApiService.saveConfig(url, token);
     isLoggedIn = true;
+    isOnline = true;
     notifyListeners();
     await refreshAll();
   }
 
   Future<void> refreshAll() async {
+    isOnline = await _checkOnline();
     await refreshOrders();
     await refreshProducts();
   }
@@ -106,13 +110,18 @@ class AppProvider extends ChangeNotifier {
   }
 
   Future<void> syncPendingActions() async {
+    if (!isOnline) return;
     final pending = await LocalDB.getPendingSync();
-    for (final o in pending) {
+    for (final action in pending) {
       try {
-        if (o.status == 'delivered') await ApiService.deliverOrder(o.id!);
-        if (o.comment != null) await ApiService.addComment(o.id!, o.comment!);
-        await LocalDB.clearSynced(o.id!);
+        if (action['action'] == 'deliver') {
+          await ApiService.deliverOrder(action['id']);
+        } else if (action['action'] == 'comment') {
+          await ApiService.addComment(action['id'], action['comment']);
+        }
       } catch (_) {}
     }
+    await LocalDB.clearPendingSync();
+    await refreshAll();
   }
 }
