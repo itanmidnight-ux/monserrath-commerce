@@ -16,6 +16,7 @@ app.use('/api/orders', require('./routes/orders'));
 app.use('/api/auth', require('./routes/auth'));
 
 app.get('/health', (req, res) => res.json({ status: 'ok', time: new Date().toISOString() }));
+app.get('/preview', (req, res) => res.sendFile(require('path').join(__dirname, 'preview.html')));
 
 const PORT = process.env.PORT || 3000;
 
