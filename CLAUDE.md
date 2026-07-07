@@ -23,7 +23,7 @@
 - LLM: Ollama llama3.2:1b (parser híbrido + reglas fuzzy) + @nlpjs/basic
 - Tunnel: ngrok dominio fijo
 - App: Flutter 3.44 (Android + Web/PWA)
-- OS dev: Linux Kali (build APK vía compilar-apk.ps1 en Windows)
+- OS dev: Linux Kali (build APK vía compilar-apk.sh, deploy servidor vía deploy-linux.sh — ambos en Linux)
 
 ## Reglas de código
 - Sin error handling para casos imposibles
