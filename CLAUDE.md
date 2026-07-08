@@ -19,7 +19,8 @@
 
 ## Stack del proyecto
 - Backend: Node.js 20 + Express + better-sqlite3 (WAL)
-- Bot: @whiskeysockets/baileys v6.7.9 (no Puppeteer)
+- Bot: @whiskeysockets/baileys v6.17.16+ (multi-device, sin Puppeteer, sin Chrome headless)
+- Bot config: teléfono encriptado AES-256-GCM en SQLite (tabla `bot_config`), estado persistente, pausa/reanudación
 - LLM: Ollama llama3.2:1b (parser híbrido + reglas fuzzy) + @nlpjs/basic
 - Tunnel: ngrok dominio fijo
 - App: Flutter 3.44 (Android + Web/PWA)
