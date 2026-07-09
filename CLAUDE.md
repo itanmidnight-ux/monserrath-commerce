@@ -21,8 +21,8 @@
 - Backend: Node.js 20 + Express + better-sqlite3 (WAL)
 - Bot: @whiskeysockets/baileys v6.17.16+ (multi-device, sin Puppeteer, sin Chrome headless)
 - Bot config: teléfono encriptado AES-256-GCM en SQLite (tabla `bot_config`), estado persistente, pausa/reanudación
-- LLM: Ollama llama3.2:1b (parser híbrido + reglas fuzzy) + @nlpjs/basic
-- Tunnel: ngrok dominio fijo
+- Parser NLU: @nlpjs/basic + reglas fuzzy en español/colombiano (server/src/services/llmParser.js) -- sin LLM (ni local ni externo), sin Ollama
+- Tunnel: Cloudflare Tunnel / Tailscale Funnel via deploy-linux.sh (sin ngrok)
 - App: Flutter 3.44 (Android + Web/PWA)
 - OS dev: Linux Kali (build APK vía compilar-apk.sh, deploy servidor vía deploy-linux.sh — ambos en Linux)
 
